@@ -4,7 +4,7 @@ RSpec.describe Voting::Vote do
   it { expect(subject).to have_property(:id) }
   it { expect(subject).to have_property(:email) }
   it { expect(subject).to have_property(:pass) }
-  it { expect(subject).to have_property(:used) }
+  it { expect(subject).to have_property(:cast) }
 
   it { expect(subject).to belong_to(:question) }
 

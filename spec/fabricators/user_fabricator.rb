@@ -1,4 +1,4 @@
-Fabricator(:user, from: 'Voting::User') do
+Fabricator(:user, class_name: 'Voting::User') do
   username { Faker::Intenet.user_name }
 
   after_build do |user, _|

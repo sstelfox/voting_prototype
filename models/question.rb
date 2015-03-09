@@ -22,17 +22,17 @@ module Voting
       votes.count
     end
 
-    def taken_votes
-      votes.used.count
+    def cast_votes
+      votes.cast.count
     end
 
     def voted_percentage
       return 0.0 if possible_votes == 0
-      taken_votes.to_f / possible_votes.to_f
+      cast_votes.to_f / possible_votes.to_f
     end
 
     def vote_breakdown
-      votes.used.vas.count(:answer_id)
+      votes.cast.vas.count(:answer_id)
     end
   end
 end
