@@ -16,16 +16,16 @@ gem 'dm-timestamps'
 gem 'dm-transactions'
 gem 'dm-validations'
 
+gem 'rake'
+gem 'pry'
+
 gem 'scrypt'
 
-group :production do
+group :heroku do
   gem 'dm-postgres-adapter'
 end
 
 group :development, :test do
-  gem 'rake'
-  gem 'pry'
-
   gem 'database_cleaner'
   gem 'dm-rspec'
   gem 'dm-sqlite-adapter'
