@@ -46,11 +46,30 @@ RSpec.describe Voting::Question do
     it 'should return the number of votes that have been cast' do
       cast_count = rand(5) + 1
 
-      ques = Fabricate(:question)
-      ques.votes += Fabricate.times(cast_count, :cast_vote, question: ques)
-      ques.save
+      inst.votes += Fabricate.times(cast_count, :cast_vote, question: inst)
+      inst.save
 
-      expect(ques.cast_votes).to eql(cast_count)
+      expect(inst.cast_votes).to eql(cast_count)
+    end
+  end
+
+  context '#percentage_cast' do
+    it 'should return 0.0 when there are no possible votes' do
+      ques = Fabricate(:question) { votes(count: 0) }
+      expect(ques.percentage_cast).to eql(0.0)
+    end
+
+    it 'should return the correct percentage of cast votes' do
+      cast_count = rand(10) + 1
+      uncast_count = rand(10)
+      total = cast_count + uncast_count
+
+      ques = Fabricate(:question) { votes(count: uncast_count) }
+      ques.votes += Fabricate.times(cast_count, :cast_vote, question: ques)
+
+      expected_pcnt = (cast_count.to_f / total.to_f)
+
+      expect(ques.percentage_cast).to eql(expected_pcnt)
     end
   end
 end

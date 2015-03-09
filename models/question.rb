@@ -26,13 +26,9 @@ module Voting
       votes.cast.count
     end
 
-    def voted_percentage
+    def percentage_cast
       return 0.0 if possible_votes == 0
       cast_votes.to_f / possible_votes.to_f
-    end
-
-    def vote_breakdown
-      votes.cast.vas.count(:answer_id)
     end
   end
 end
