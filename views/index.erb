@@ -1,8 +1,8 @@
 <% questions.each do |q| %>
   <h3><%= q.text %><% if q.closed? %>(Voting is closed)<% end %></h3>
-  <h4>Voting Progress: <%= q.taken_votes %> / <%= q.possible_votes %> (<%= '%0.2f' % q.voted_percentage %>%)</h4>
-  <table>
-    <% q.vote_breakdown do |answer, count| %>
+  <h4>Voting Progress: <%= q.cast_votes %> / <%= q.possible_votes %> (<%= '%0.2f' % q.percentage_cast %>%)</h4>
+  <table class='table'>
+    <% q.vote_breakdown.each do |answer, count| %>
       <tr>
         <th><%= answer.text %></th>
         <td><%= count %></td>
