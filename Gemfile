@@ -28,6 +28,8 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'dm-rspec'
   gem 'dm-sqlite-adapter'
+  gem 'fabrication'
+  gem 'faker'
   gem 'rspec'
   gem 'simplecov'
 

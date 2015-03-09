@@ -1,4 +1,6 @@
 require 'rspec'
+require 'fabrication'
+require 'faker'
 require 'database_cleaner'
 require 'dm-rspec'
 require 'dm-transactions'
