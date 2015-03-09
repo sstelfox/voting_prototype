@@ -26,24 +26,30 @@ module Voting
 
     use Rack::Flash
     register Sinatra::Namespace
+  end
+end
 
-    get '/' do
-      erb :index
-    end
+# Collect all the helpers, and routers that we'll be loading
+helpers = Dir[(Voting::App.root + '/helpers/*.rb')].map { |f| File.basename(f, '.rb') }
+routers = Dir[(Voting::App.root + '/routes/*.rb')].map { |f| File.basename(f, '.rb') }
 
-    not_found do
-      erb :'404'
-    end
+helpers.each { |h| require "helpers/#{h}" }
+routers.each { |r| require "routes/#{r}" }
 
-    error do
-      erb :error
-    end
+class Voting::App
+  get '/' do
+    erb :index
   end
 
-  # Collect all the helpers, and routers that we'll be loading
-  helpers = Dir[(App.root + '/helpers/*.rb')].map { |f| File.basename(f, '.rb') }
-  routers = Dir[(App.root + '/routes/*.rb')].map { |f| File.basename(f, '.rb') }
+  get '/test', :auth => nil do
+    erb :index
+  end
 
-  helpers.each { |h| require "helpers/#{h}" }
-  routers.each { |r| require "routes/#{r}" }
+  not_found do
+    erb :'404'
+  end
+
+  error do
+    erb :error
+  end
 end

@@ -1,11 +1,9 @@
 require 'ipaddr'
 
 class Voting::App
-  before do
-    login_required unless logged_in? || request.path =~ /^\/login/
+  set(:auth) do
+    condition { login_required unless logged_in? }
   end
-
-  enable :sessions
 
   get '/login/?' do
     if logged_in?
@@ -64,7 +62,7 @@ class Voting::App
 
       flash[:alert] = "You need to login before continuing."
       session[:stored_path] = request.fullpath if routeable_path?(request.fullpath)
-      redirect "/login"
+      redirect '/login', 303
     end
 
     # A helper method to redirect to the last page requested that required a
