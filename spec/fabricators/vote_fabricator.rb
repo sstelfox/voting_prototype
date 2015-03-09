@@ -8,7 +8,7 @@ Fabricator(:cast_vote, from: :vote) do
   after_create do |vote, _|
     answers = vote.question.answers
 
-    vote.answers = answers.sample(answers.count)
+    vote.answers = answers.sample(rand(answers.count))
     vote.save
   end
 end

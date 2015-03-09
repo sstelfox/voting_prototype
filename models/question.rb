@@ -30,5 +30,9 @@ module Voting
       return 0.0 if possible_votes == 0
       cast_votes.to_f / possible_votes.to_f
     end
+
+    def vote_breakdown
+      answers.map { |a| [a, a.votes.count ] }.sort_by { |_, cnt| -cnt }
+    end
   end
 end

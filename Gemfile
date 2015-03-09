@@ -9,6 +9,7 @@ gem 'thin'
 
 gem 'dm-core'
 
+gem 'dm-aggregates'
 gem 'dm-constraints'
 gem 'dm-migrations'
 gem 'dm-timestamps'
