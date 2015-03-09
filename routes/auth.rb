@@ -18,7 +18,7 @@ class Voting::App
     if !logged_in? && user = Voting::User.authenticate(params['username'], params['password'])
       session[:user] = user.id
       session[:ip] = request.ip
-      flash[:success] = 'You\'ve successfully logged in as #{user.username}.'
+      flash[:success] = "You've successfully logged in as #{user.username}."
 
       redirect_to_stored
     else

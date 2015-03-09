@@ -1,0 +1,20 @@
+<h3><%= question.text %><% if question.closed? %> <em>(Voting is closed)</em><% end %></h3>
+<h4>Voting Progress: <%= question.cast_voters %> / <%= question.possible_voters %> (<%= '%0.2f' % question.percentage_cast %>%)</h4>
+<hr/>
+
+<h3>Current Results:</h3>
+<table class='table'>
+  <tbody>
+  <% question.vote_breakdown.each do |answer, count| %>
+    <tr>
+      <th><%= answer.text %></th>
+      <td><%= count %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<hr/>
+
+<h3>Voter Breakdown</h3>
+<table class='table'>
+</table>

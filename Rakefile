@@ -7,6 +7,13 @@ rescue LoadError
 end
 
 task "environment" do
+  begin
+    require 'fabrication'
+    require 'faker'
+  rescue LoadError
+    # These aren't available in production
+  end
+
   require './voting'
 end
 

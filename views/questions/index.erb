@@ -1,0 +1,22 @@
+<% if questions.empty? %>
+  <p><em>There are no questions here to be voted on.</em></p>
+<% else %>
+  <table class='table'>
+    <thead><tr>
+      <th>Question</th>
+      <th>Voter Progress</th>
+      <th>Answer Count</th>
+      <th>Voting Closed?</th>
+    </tr></thead>
+    <tbody>
+      <% questions.each do |q| %>
+        <tr>
+          <td><a href='/questions/<%= q.id %>'><%= q.text %></a></td>
+          <td><%= q.cast_voters %> / <%= q.possible_voters %> (<%= '%0.2f' % q.percentage_cast %>%)</td>
+          <td><%= q.answers.count %></td>
+          <td><%= q.closed? ? 'Yes' : 'No' %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

@@ -25,7 +25,6 @@ module Voting
     end
 
     use Rack::Flash
-    register Sinatra::Namespace
   end
 end
 
@@ -38,11 +37,15 @@ routers.each { |r| require "routes/#{r}" }
 
 class Voting::App
   get '/' do
-    erb :index, :locals => { :questions => Voting::Question.all }
+    erb :'questions/index', :locals => { :questions => Voting::Question.all }
   end
 
-  get '/test', :auth => nil do
-    erb :auth_test
+  get '/diagnostics/?' do
+    erb :diagnostics, :locals => {:diagnostics => params}
+  end
+
+  post '/diagnostics/?' do
+    erb :diagnostics, :locals => {:diagnostics => params}
   end
 
   not_found do
