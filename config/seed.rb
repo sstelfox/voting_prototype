@@ -15,9 +15,9 @@ def skipped
 end
 
 simple_log("Creating admin user...")
-if User.first(username: 'admin')
+if Voting::User.first(username: 'admin')
   skipped
 else
-  u = User.new(username: 'admin', password: 'password', password_confirmation: 'password')
+  u = Voting::User.new(username: 'admin', password: 'password', password_confirmation: 'password')
   u.save ? success : failed
 end

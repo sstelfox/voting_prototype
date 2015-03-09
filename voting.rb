@@ -38,11 +38,11 @@ routers.each { |r| require "routes/#{r}" }
 
 class Voting::App
   get '/' do
-    erb :index
+    erb :index, :locals => { :questions => Voting::Question.all }
   end
 
   get '/test', :auth => nil do
-    erb :index
+    erb :auth_test
   end
 
   not_found do

@@ -15,7 +15,7 @@ class Voting::App
   end
 
   post '/login/?' do
-    if !logged_in? && user = User.authenticate(params["username"], params["password"])
+    if !logged_in? && user = Voting::User.authenticate(params["username"], params["password"])
       session[:user] = user.id
       session[:ip] = request.ip
       flash[:success] = "You've successfully logged in as #{user.username}."
@@ -42,7 +42,7 @@ class Voting::App
     #
     # @return [User,Nil]
     def current_user
-      User.get(session[:user])
+      Voting::User.get(session[:user])
     end
 
     # Checks to see whether or not the current user is logged in, also checks
