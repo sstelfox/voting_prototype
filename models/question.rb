@@ -8,8 +8,7 @@ module Voting
     property :text,   String, :length => 256, :required => true
 
     has n, :answers
-    has n, :vas
-    has n, :votes, :through => :vas
+    has n, :votes
 
     def close_voting!
       update(closed: true)
