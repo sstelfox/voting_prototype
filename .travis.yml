@@ -1,4 +1,10 @@
 language: ruby
 cache: bundler
+bundler_args: --without production
+before_script:
+  - bundle exec rake db:seed
+env:
+  global:
+  - DATABASE_URL=/tmp/test.db
 rvm:
   - 2.1.5
