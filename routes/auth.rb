@@ -7,23 +7,23 @@ class Voting::App
 
   get '/login/?' do
     if logged_in?
-      flash[:notice] = "You're already logged in."
+      flash[:notice] = 'You\'re already logged in.'
       redirect_to_stored
     else
-      erb :"auth/login"
+      erb :'auth/login'
     end
   end
 
   post '/login/?' do
-    if !logged_in? && user = Voting::User.authenticate(params["username"], params["password"])
+    if !logged_in? && user = Voting::User.authenticate(params['username'], params['password'])
       session[:user] = user.id
       session[:ip] = request.ip
-      flash[:success] = "You've successfully logged in as #{user.username}."
+      flash[:success] = 'You\'ve successfully logged in as #{user.username}.'
 
       redirect_to_stored
     else
-      flash.now[:alert] = "Invalid login credentials provided."
-      erb :"auth/login"
+      flash.now[:alert] = 'Invalid login credentials provided.'
+      erb :'auth/login'
     end
   end
 
@@ -32,8 +32,8 @@ class Voting::App
     session[:user] = nil
     session[:ip] = nil
 
-    flash[:notice] = "You've been logged out."
-    redirect "/"
+    flash[:notice] = 'You\'ve been logged out.'
+    redirect '/'
   end
 
   helpers do
@@ -60,7 +60,7 @@ class Voting::App
     def login_required
       return false if logged_in?
 
-      flash[:alert] = "You need to login before continuing."
+      flash[:alert] = 'You need to login before continuing.'
       session[:stored_path] = request.fullpath if routeable_path?(request.fullpath)
       redirect '/login', 303
     end
@@ -74,7 +74,7 @@ class Voting::App
         session[:stored_path] = nil
         redirect new_loc
       else
-        redirect "/"
+        redirect '/'
       end
     end
 

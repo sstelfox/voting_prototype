@@ -5,8 +5,13 @@ require 'database_cleaner'
 require 'dm-rspec'
 require 'dm-transactions'
 require 'simplecov'
+require 'coveralls'
 
-SimpleCov.formatter = SimpleCov::Formatter::HTMLFormatter
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
+  SimpleCov::Formatter::HTMLFormatter,
+  Coveralls::SimpleCov::Formatter
+]
+
 SimpleCov.add_filter "/spec/"
 SimpleCov.add_filter do |source_file|
   source_file.lines.count < 3

@@ -8,7 +8,7 @@ module Voting
     property :text,   String, :length => 256, :required => true
 
     has n, :answers
-    has n, :votes
+    has n, :voters
 
     def close_voting!
       update(closed: true)
@@ -18,21 +18,21 @@ module Voting
       closed
     end
 
-    def possible_votes
-      votes.count
+    def possible_voters
+      voters.count
     end
 
-    def cast_votes
-      votes.cast.count
+    def cast_voters
+      voters.cast.count
     end
 
     def percentage_cast
-      return 0.0 if possible_votes == 0
-      cast_votes.to_f / possible_votes.to_f
+      return 0.0 if possible_voters == 0
+      cast_voters.to_f / possible_voters.to_f
     end
 
     def vote_breakdown
-      answers.map { |a| [a, a.votes.count ] }.sort_by { |_, cnt| -cnt }
+      answers.map { |a| [a, a.voters.count ] }.sort_by { |_, cnt| -cnt }
     end
   end
 end

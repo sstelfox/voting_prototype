@@ -26,6 +26,7 @@ group :heroku do
 end
 
 group :development, :test do
+  gem 'coveralls'
   gem 'database_cleaner'
   gem 'dm-rspec'
   gem 'dm-sqlite-adapter'

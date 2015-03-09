@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-RSpec.describe Voting::Vote do
+RSpec.describe Voting::Voter do
   it { expect(subject).to have_property(:id) }
   it { expect(subject).to have_property(:email) }
-  it { expect(subject).to have_property(:pass) }
-  it { expect(subject).to have_property(:cast) }
+  it { expect(subject).to have_property(:token) }
+  it { expect(subject).to have_property(:vote_cast) }
 
   it { expect(subject).to belong_to(:question) }
 

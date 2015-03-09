@@ -8,6 +8,6 @@ module Voting
     belongs_to :question
 
     has n, :vas
-    has n, :votes, :through => :vas
+    has n, :voters, :through => :vas
   end
 end

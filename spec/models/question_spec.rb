@@ -6,7 +6,7 @@ RSpec.describe Voting::Question do
   it { expect(subject).to have_property(:text) }
 
   it { expect(subject).to have_many(:answers) }
-  it { expect(subject).to have_many(:votes) }
+  it { expect(subject).to have_many(:voters) }
 
   let(:inst) { Fabricate(:question) }
 
@@ -34,28 +34,28 @@ RSpec.describe Voting::Question do
     end
   end
 
-  context '#possible_votes' do
-    it 'should return the number of votes associated with the question' do
+  context '#possible_voters' do
+    it 'should return the number of voters associated with the question' do
       cnt = rand(10) + 1
-      question = Fabricate(:question) { votes(count: cnt) }
-      expect(question.possible_votes).to eql(cnt)
+      question = Fabricate(:question) { voters(count: cnt) }
+      expect(question.possible_voters).to eql(cnt)
     end
   end
 
-  context '#cast_votes' do
-    it 'should return the number of votes that have been cast' do
+  context '#cast_voters' do
+    it 'should return the number of voters that have cast their vote' do
       cast_count = rand(5) + 1
 
-      inst.votes += Fabricate.times(cast_count, :cast_vote, question: inst)
+      inst.voters += Fabricate.times(cast_count, :cast_voter, question: inst)
       inst.save
 
-      expect(inst.cast_votes).to eql(cast_count)
+      expect(inst.cast_voters).to eql(cast_count)
     end
   end
 
   context '#percentage_cast' do
     it 'should return 0.0 when there are no possible votes' do
-      ques = Fabricate(:question) { votes(count: 0) }
+      ques = Fabricate(:question) { voters(count: 0) }
       expect(ques.percentage_cast).to eql(0.0)
     end
 
@@ -64,8 +64,8 @@ RSpec.describe Voting::Question do
       uncast_count = rand(10)
       total = cast_count + uncast_count
 
-      ques = Fabricate(:question) { votes(count: uncast_count) }
-      ques.votes += Fabricate.times(cast_count, :cast_vote, question: ques)
+      ques = Fabricate(:question) { voters(count: uncast_count) }
+      ques.voters += Fabricate.times(cast_count, :cast_voter, question: ques)
 
       expected_pcnt = (cast_count.to_f / total.to_f)
 

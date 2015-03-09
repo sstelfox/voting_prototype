@@ -30,8 +30,8 @@ module Voting
 end
 
 # Collect all the helpers, and routers that we'll be loading
-helpers = Dir[(Voting::App.root + '/helpers/*.rb')].map { |f| File.basename(f, '.rb') }
-routers = Dir[(Voting::App.root + '/routes/*.rb')].map { |f| File.basename(f, '.rb') }
+helpers = Dir[(Voting::App.root + '/helpers/*.rb')].map { |f| File.basename(f, '.rb') }.sort
+routers = Dir[(Voting::App.root + '/routes/*.rb')].map { |f| File.basename(f, '.rb') }.sort
 
 helpers.each { |h| require "helpers/#{h}" }
 routers.each { |r| require "routes/#{r}" }
