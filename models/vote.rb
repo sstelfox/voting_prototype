@@ -11,7 +11,8 @@ class Vote
   property :used,         Boolean,  :default => false
 
   belongs_to :question
-  has n, :answers, :through => Resource
+  has n, :vas
+  has n, :answers, :through => :vas
 
   before :save, :generate_pass
 
