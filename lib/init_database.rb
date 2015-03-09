@@ -8,7 +8,7 @@ require 'dm-timestamps'
 require 'dm-transactions'
 require 'dm-validations'
 
-database_path = ENV['DATABASE_URL'] || 'sqlite://' + File.expand_path(File.join(File.dirname(__FILE__), '..', 'config', 'database.db'))
+database_path = ENV['DATABASE_URL'] || ENV['HEROKU_POSTGRESQL_JADE_URL'] || 'sqlite://' + File.expand_path(File.join(File.dirname(__FILE__), '..', 'config', 'database.db'))
 
 DataMapper::Logger.new($stdout, :info)
 DataMapper.setup(:default, database_path)
