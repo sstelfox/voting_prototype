@@ -72,4 +72,9 @@ RSpec.describe Voting::Question do
       expect(ques.percentage_cast).to eql(expected_pcnt)
     end
   end
+
+  context '#vote_breakdown' do
+    it 'should return an array of answers with the number of votes they\'ve received'
+    it 'should sort the array based on number of votes (descending)'
+  end
 end
