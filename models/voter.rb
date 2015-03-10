@@ -30,6 +30,10 @@ module Voting
       update(vote_cast: true, answers: question.answers.all(id: answer_ids))
     end
 
+    def vote_cast?
+      self.vote_cast
+    end
+
     def generate_token
       self.token ||= SecureRandom.hex(24)
     end

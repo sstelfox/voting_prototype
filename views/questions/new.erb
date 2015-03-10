@@ -1,8 +1,30 @@
-<form id='new_question_form' method='POST' action='/diagnostics'>
-  <input name='answer_attributes[]text' />
-  <input name='answer_attributes[]text' />
-  <input name='voters_attributes[]email' />
-  <input name='voters_attributes[]email' />
+<div class='row'>
+  <div class='col-md-4'></div>
+  <div class='col-md-4'>
+    <form action='/questions/new' method='post'>
+      <div class='form-group'>
+        <label class='control-label'>Question</label>
+        <input type='text' name='question[text]' class='form-control' placeholder='What question would you like to poll?' required autofocus>
+      </div>
 
-  <input type='submit' />
-</form>
+      <% question.answers.each do |ans| %>
+        <div class='form-group'>
+          <label class="control-label">Answer</label>
+          <input type="text" name='question[answer_attributes][]text' class="form-control" placeholder="Possible poll answer" required>
+        </div>
+      <% end %>
+
+      <% question.voters.each do |ans| %>
+        <div class='form-group'>
+          <label class="control-label">Voter Email</label>
+          <input type="text" name='question[voter_attributes][]email' class="form-control" placeholder="Email of a voter" required>
+        </div>
+      <% end %>
+
+      <div class='form-group'>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+      </div>
+    </form>
+  </div>
+  <div class='col-md-4'></div>
+</div>

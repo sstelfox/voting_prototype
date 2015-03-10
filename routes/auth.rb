@@ -36,6 +36,10 @@ class Voting::App
     redirect '/'
   end
 
+  error(403) do
+    erb :'auth/forbidden'
+  end
+
   helpers do
     # Get a copy of the currently logged in user or nil if the user is
     # invalid/not logged in.

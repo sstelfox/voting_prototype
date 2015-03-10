@@ -2,15 +2,19 @@
   <div class='col-md-4'></div>
   <div class='col-md-4'>
     <form action='/login' method='post'>
-      <label for="username">Username</label>
-      <input type="text" id="username" name='username' class="form-control" placeholder="Username" required autofocus>
-      <br />
+      <div class='form-group'>
+        <label for='username' class='control-label'>Username</label>
+        <input type='text' id='username' name='username' class='form-control' placeholder='Username' required autofocus>
+      </div>
 
-      <label for="password">Password</label>
-      <input type="password" id="password" name='password' class="form-control" placeholder="Password" required>
-      <br />
+      <div class='form-group'>
+        <label for="password" class="control-label">Password</label>
+        <input type="password" id="password" name='password' class="form-control" placeholder="Password" required>
+      </div>
 
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+      <div class='form-group'>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+      </div>
     </form>
   </div>
   <div class='col-md-4'></div>

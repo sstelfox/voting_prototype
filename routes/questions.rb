@@ -15,8 +15,8 @@ class Voting::App
 
   post '/questions/new/?', :auth => nil do
     question = params[:question] || {}
-    answer_attributes = question.delete(:answer_attributes) || []
-    voter_attributes = question.delete(:voter_attributes) || []
+    answer_attributes = question.delete('answer_attributes') || []
+    voter_attributes = question.delete('voter_attributes') || []
 
     question = Voting::Question.new(question)
     question.answers = answer_attributes.map { |a| Voting::Answer.new(a) }
@@ -33,5 +33,17 @@ class Voting::App
 
   get '/questions/:id/?' do
     erb :'questions/show', :locals => {question: Voting::Question.get(params[:id])}
+  end
+
+  get '/questions/:id/vote/:token/?' do
+    unless (question = Voting::Question.get(params[:id]))
+      halt(404)
+    end
+
+    unless (voter = question.voters.all(token: params[:token]).first)
+      halt(403)
+    end
+
+    erb :'questions/vote', :locals => {question: question, voter: voter}
   end
 end
