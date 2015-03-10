@@ -30,10 +30,12 @@ module Voting
     # @param [String] pass
     # @return [User,Nil]
     def self.authenticate(user, pass)
+      return if user.nil?
+
       user = first(username: user.downcase)
 
-      return nil if user.nil?
-      return nil unless user.check_password(pass)
+      return if user.nil?
+      return unless user.check_password(pass)
 
       user
     end
