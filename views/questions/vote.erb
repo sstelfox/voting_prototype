@@ -1,2 +1,25 @@
-Q: <%= question.inspect %>
-V: <%= voter.inspect %>
+<% if voter.vote_cast? %>
+  <p>You've already cast your vote. You can see it below but can't change it</p>
+  <p><strong>Question:</strong> <a href='/questions/<%= question.id %>/'><%= question.text %></a></p>
+  <ul>
+    <% voter.answers.each do |a| %><li><%= a.text %></li><% end %>
+  </ul>
+<% else %>
+  <div class='row'>
+    <div class='offset-md-4 col-md-4'>
+      <p>Cast your vote below. You can choose any number of selections below (including none). Once cast you can not change or update your vote.</p>
+      <p><strong>Question:</strong> <a href='/questions/<%= question.id %>/'><%= question.text %></a></p>
+      <form action='/questions/<%= question.id %>/vote/<%= voter.token %>/' method='post'>
+        <div class='form-group'>
+          <label class='control-label'>Answers</label>
+          <% question.answers.each do |ans| %>
+            <div class="checkbox"><label><input type="checkbox" name='answer_ids[]' value='<%= ans.id %>'><%= ans.text %></label></div>
+          <% end %>
+        </div>
+        <div class='form-group'>
+          <button class="btn btn-lg btn-primary btn-block" type="submit">Vote</button>
+        </div>
+      </form>
+    </div>
+  </div>
+<% end %>

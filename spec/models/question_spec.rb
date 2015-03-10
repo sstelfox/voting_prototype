@@ -67,7 +67,7 @@ RSpec.describe Voting::Question do
       ques = Fabricate(:question) { voters(count: uncast_count) }
       ques.voters += Fabricate.times(cast_count, :cast_voter, question: ques)
 
-      expected_pcnt = (cast_count.to_f / total.to_f)
+      expected_pcnt = (cast_count.to_f / total.to_f) * 100
 
       expect(ques.percentage_cast).to eql(expected_pcnt)
     end

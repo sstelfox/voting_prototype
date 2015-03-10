@@ -35,15 +35,28 @@ class Voting::App
     erb :'questions/show', :locals => {question: Voting::Question.get(params[:id])}
   end
 
-  get '/questions/:id/vote/:token/?' do
-    unless (question = Voting::Question.get(params[:id]))
-      halt(404)
-    end
+  get '/questions/:id/close/?', :auth => nil do
+    halt(404) unless (question = Voting::Question.get(params[:id]))
 
-    unless (voter = question.voters.all(token: params[:token]).first)
-      halt(403)
-    end
+    question.close_voting!
+    redirect "/questions/#{question.id}/"
+  end
+
+  get '/questions/:id/vote/:token/?' do
+    halt(404) unless (question = Voting::Question.get(params[:id]))
+    halt(403) unless (voter = question.voters.all(token: params[:token]).first)
 
     erb :'questions/vote', :locals => {question: question, voter: voter}
+  end
+
+  post '/questions/:question_id/vote/:token/?' do
+    halt(404) unless (question = Voting::Question.get(params[:question_id]))
+    halt(403) unless (voter = question.voters.all(token: params[:token]).first)
+
+    if voter.answer!(params[:answer_ids].map(&:to_i))
+      redirect "/questions/#{question.id}/vote/#{voter.token}/"
+    else
+      erb :'questions/vote', :locals => {question: question, voter: voter}
+    end
   end
 end

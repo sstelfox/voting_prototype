@@ -28,7 +28,7 @@ module Voting
 
     def percentage_cast
       return 0.0 if possible_voters == 0
-      cast_voters.to_f / possible_voters.to_f
+      (cast_voters.to_f / possible_voters.to_f) * 100
     end
 
     def vote_breakdown
