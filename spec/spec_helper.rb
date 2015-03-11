@@ -7,6 +7,7 @@ require 'faker'
 require 'rack/test'
 require 'rspec'
 require 'simplecov'
+require 'support/path_helper'
 
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
   SimpleCov::Formatter::HTMLFormatter,
@@ -29,6 +30,8 @@ DataMapper.auto_upgrade!
 
 RSpec.configure do |config|
   config.include(DataMapper::Matchers)
+  config.include(Rack::Test::Methods)
+  config.include(TestPathHelper)
 
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction
