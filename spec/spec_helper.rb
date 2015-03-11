@@ -1,11 +1,12 @@
-require 'rspec'
-require 'fabrication'
-require 'faker'
+require 'coveralls'
 require 'database_cleaner'
 require 'dm-rspec'
 require 'dm-transactions'
+require 'fabrication'
+require 'faker'
+require 'rack/test'
+require 'rspec'
 require 'simplecov'
-require 'coveralls'
 
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
   SimpleCov::Formatter::HTMLFormatter,
