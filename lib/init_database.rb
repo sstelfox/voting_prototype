@@ -1,20 +1,15 @@
 
-require 'dm-core'
-
-require 'dm-aggregates'
-require 'dm-constraints'
-require 'dm-migrations'
-require 'dm-timestamps'
-require 'dm-transactions'
-require 'dm-validations'
-
-database_path = ENV['DATABASE_URL'] || ENV['HEROKU_POSTGRESQL_JADE_URL'] || 'sqlite://' + File.expand_path(File.join(File.dirname(__FILE__), '..', 'config', 'database.db'))
+database_path = ENV['DATABASE_URL'] ||
+  ENV['HEROKU_POSTGRESQL_JADE_URL'] ||
+  'sqlite://' + File.expand_path(File.join(File.dirname(__FILE__), '..', 'config', 'database.db'))
 
 DataMapper::Logger.new($stdout, :info)
 DataMapper.setup(:default, database_path)
 
-Dir[File.join(File.dirname(__FILE__), '..', 'models', '*.rb')].each do |m|
-  require "models/#{File.basename(m, '.rb')}"
-end
+require 'app/models/answer'
+require 'app/models/question'
+require 'app/models/user'
+require 'app/models/va'
+require 'app/models/voter'
 
 DataMapper.finalize

@@ -4,6 +4,15 @@ $:.unshift(base_directory) unless $:.include?(base_directory)
 require 'rubygems'
 require 'json'
 
+require 'dm-core'
+
+require 'dm-aggregates'
+require 'dm-constraints'
+require 'dm-migrations'
+require 'dm-timestamps'
+require 'dm-transactions'
+require 'dm-validations'
+
 require 'sinatra/base'
 require 'sinatra/namespace'
 require 'rack-flash'
@@ -11,48 +20,7 @@ require 'rack-flash'
 require 'lib/core_ext/hash'
 require 'lib/init_database'
 
-module Voting
-  class App < Sinatra::Base
-    enable :logging, :sessions, :method_override
-
-    set :root, File.expand_path(File.dirname(__FILE__))
-    set :views, (self.root + '/views')
-    set :public_folder, (self.root + '/public')
-
-    configure :development do
-      enable :raise_errors
-      enable :show_exceptions
-    end
-
-    use Rack::Flash
-  end
-end
-
-# Collect all the helpers, and routers that we'll be loading
-helpers = Dir[(Voting::App.root + '/helpers/*.rb')].map { |f| File.basename(f, '.rb') }.sort
-routers = Dir[(Voting::App.root + '/routes/*.rb')].map { |f| File.basename(f, '.rb') }.sort
-
-helpers.each { |h| require "helpers/#{h}" }
-routers.each { |r| require "routes/#{r}" }
-
-class Voting::App
-  get '/' do
-    erb :'questions/index', :locals => { :questions => Voting::Question.all }
-  end
-
-  get '/diagnostics/?' do
-    erb :diagnostics, :locals => {:diagnostics => params}
-  end
-
-  post '/diagnostics/?' do
-    erb :diagnostics, :locals => {:diagnostics => params}
-  end
-
-  not_found do
-    erb :'404'
-  end
-
-  error do
-    erb :error
-  end
-end
+require 'lib/voting_app'
+require 'app/routes/default'
+require 'app/routes/auth'
+require 'app/routes/questions'
