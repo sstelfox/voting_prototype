@@ -1,6 +1,8 @@
-require 'ipaddr'
+require 'app/helpers/post_helpers'
 
 class Voting::App
+  helpers Voting::PostHelpers
+
   get '/questions/?' do
     erb :'questions/index', :locals => {questions: Voting::Question.all}
   end
@@ -59,12 +61,6 @@ class Voting::App
       redirect "/questions/#{question.id}/"
     else
       erb :'questions/vote', :locals => {question: question, voter: voter}
-    end
-  end
-
-  helpers do
-    def extract_attributes(attrs)
-      (attrs || []).reject { |a| a.nil? || a.empty? }
     end
   end
 end
