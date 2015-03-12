@@ -15,12 +15,14 @@ class Voting::App
 
   post '/questions/new/?', :auth => nil do
     question = params[:question] || {}
-    answer_attributes = question.delete('answer_attributes') || []
-    voter_attributes = question.delete('voter_attributes') || []
+    answers = extract_attributes(question.delete('answer_attributes'))
+                .map { |a| Voting::Answer.new(a) }
+    voters = extract_attributes(question.delete('voter_attributes'))
+                .map { |a| Voting::Voter.new(a) }
 
     question = Voting::Question.new(question)
-    question.answers = answer_attributes.select { |a| a.nil? || a.empty? }.map { |a| Voting::Answer.new(a) }
-    question.voters = voter_attributes.select { |a| a.nil? || a.empty? }.map { |v| Voting::Voter.new(v) }
+    question.answers = answers
+    question.voters = voters
 
     if question.save
       flash[:success] = "You've successfully created a <a href='/questions/#{question.id}'>new question</a>."
@@ -54,9 +56,15 @@ class Voting::App
     halt(403) unless (voter = question.voters.all(token: params[:token]).first)
 
     if voter.answer!(params[:answer_ids].map(&:to_i))
-      redirect "/questions/#{question.id}/vote/#{voter.token}/"
+      redirect "/questions/#{question.id}/"
     else
       erb :'questions/vote', :locals => {question: question, voter: voter}
+    end
+  end
+
+  helpers do
+    def extract_attributes(attrs)
+      (attrs || []).reject { |a| a.nil? || a.empty? }
     end
   end
 end
