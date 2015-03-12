@@ -1,12 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe 'authentication routes' do
-  include Rack::Test::Methods
-
-  def app
-    Voting::App
-  end
-
+RSpec.describe 'authentication routes', :rack do
   context 'while logged in' do
   end
 
