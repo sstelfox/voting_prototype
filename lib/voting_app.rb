@@ -4,7 +4,7 @@ module Voting
 
     set :root, File.expand_path(File.join(File.dirname(__FILE__), '..'))
     set :views, (self.root + '/app/views')
-    set :public_folder, (self.root + '/public')
+    set :public_folder, (self.root + '/app/public')
 
     configure :development do
       enable :raise_errors
