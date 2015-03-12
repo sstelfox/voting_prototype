@@ -2,8 +2,8 @@ module Voting
   class App < Sinatra::Base
     enable :logging, :sessions, :method_override
 
-    set :root, File.expand_path(File.dirname(__FILE__))
-    set :views, (self.root + '/views')
+    set :root, File.expand_path(File.join(File.dirname(__FILE__), '..'))
+    set :views, (self.root + '/app/views')
     set :public_folder, (self.root + '/public')
 
     configure :development do
