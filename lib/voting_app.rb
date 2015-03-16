@@ -9,6 +9,8 @@ module Voting
     configure :development do
       enable :raise_errors
       enable :show_exceptions
+
+      set :session_secret, 'Static Key'
     end
 
     use Rack::Flash
