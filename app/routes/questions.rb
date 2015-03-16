@@ -20,7 +20,7 @@ class Voting::App
       flash[:success] = "You've successfully created a <a href='/questions/#{question.id}'>new question</a>."
       redirect '/questions'
     else
-      flash[:error] = "There was an error in your submission."
+      flash.now[:alert] = "There was an error in your submission."
       erb :'questions/new', :locals => {question: question}
     end
   end
