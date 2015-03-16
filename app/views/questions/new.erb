@@ -4,25 +4,27 @@
     <form action='/questions/new' method='post'>
       <div class='form-group'>
         <label class='control-label'>Question</label>
-        <input type='text' name='question[text]' class='form-control' placeholder='What question would you like to poll?' required autofocus>
+        <input type='text' name='question[text]' class='form-control' value='<%= question.text %>' placeholder='What question would you like to poll?' autofocus />
       </div>
 
-      <% question.answers.each do |ans| %>
+      <% question.answers.each do |answer| %>
+        <input type='hidden' name='question[answer_attributes][]id' value='<%= answer.id %>' />
         <div class='form-group'>
-          <label class="control-label">Answer</label>
-          <input type="text" name='question[answer_attributes][]text' class="form-control" placeholder="Possible poll answer" required>
+          <label class='control-label'>Answer</label>
+          <input type='text' name='question[answer_attributes][]text' class='form-control' value='<%= answer.text %>' placeholder='Possible poll answer' />
         </div>
       <% end %>
 
-      <% question.voters.each do |ans| %>
+      <% question.voters.each do |voter| %>
+        <input type='hidden' name='question[voter_attributes][]id' value='<%= voter.id %>' />
         <div class='form-group'>
-          <label class="control-label">Voter Email</label>
-          <input type="text" name='question[voter_attributes][]email' class="form-control" placeholder="Email of a voter" required>
+          <label class='control-label'>Voter Email</label>
+          <input type='text' name='question[voter_attributes][]email' class='form-control' value='<%= voter.email %>' placeholder='Email of a voter' />
         </div>
       <% end %>
 
       <div class='form-group'>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+        <button class='btn btn-lg btn-primary btn-block' type='submit'>Create Question</button>
       </div>
     </form>
   </div>
