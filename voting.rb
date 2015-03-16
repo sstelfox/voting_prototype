@@ -17,10 +17,13 @@ require 'sinatra/base'
 require 'sinatra/namespace'
 require 'rack-flash'
 
-require 'lib/core_ext/hash'
-require 'lib/init_database'
+require 'app/helpers/auth_helpers'
+require 'app/helpers/nested_model_helpers'
+require 'app/helpers/post_helpers'
 
+require 'lib/init_database'
 require 'lib/voting_app'
+
 require 'app/routes/default'
 require 'app/routes/auth'
 require 'app/routes/questions'

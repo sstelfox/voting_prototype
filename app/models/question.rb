@@ -10,15 +10,8 @@ module Voting
     has n, :answers
     has n, :voters
 
-    #validates_with_method :validate_answers
-    #validates_with_method :validate_voters
-
     def answer_attributes=(attrs)
-      self.answers = Array(attrs).map do |a|
-        answer = answers.get(a.delete(:id).to_i) || Voting::Answer.new(a)
-        answer.attributes = a
-        answer
-      end
+      self.answers = Array(attrs).map { |a| Voting::Answer.set_or_new(a) }
     end
 
     def cast_voters
@@ -47,27 +40,7 @@ module Voting
     end
 
     def voter_attributes=(attrs)
-      self.voters = Array(attrs).map do |v|
-        voter = voters.get(v.delete(:id).to_i) || Voting::Voter.new(v)
-        voter.attributes = v
-        voter
-      end
-    end
-
-    protected
-
-    def validate_answers
-      unless answers.map(&:valid?).all?
-        return [false, 'One or more answers are invalid.']
-      end
-      true
-    end
-
-    def validate_voters
-      unless voters.map(&:valid?).all?
-        return [false, 'One or more voters are invalid.']
-      end
-      true
+      self.voters = Array(attrs).map { |v| Voting::Voter.set_or_new(v) }
     end
   end
 end

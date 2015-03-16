@@ -1,5 +1,3 @@
-require 'app/helpers/post_helpers'
-
 class Voting::App
   helpers Voting::PostHelpers
 

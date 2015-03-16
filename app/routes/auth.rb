@@ -1,5 +1,3 @@
-require 'app/helpers/auth_helper'
-
 class Voting::App
   helpers Voting::AuthHelpers
 

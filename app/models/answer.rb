@@ -1,6 +1,7 @@
 module Voting
   class Answer
     include DataMapper::Resource
+    include NestedModelHelpers
 
     property :id,     Serial
     property :text,   String, :length => 256, :required => true

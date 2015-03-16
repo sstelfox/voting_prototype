@@ -3,6 +3,7 @@ require 'securerandom'
 module Voting
   class Voter
     include DataMapper::Resource
+    include NestedModelHelpers
 
     property :id,     Serial
 
@@ -17,12 +18,12 @@ module Voting
 
     before :save, :generate_token
 
-    def self.uncast
-      all(vote_cast: false)
-    end
-
     def self.cast
       all(vote_cast: true)
+    end
+
+    def self.uncast
+      all(vote_cast: false)
     end
 
     def answer!(answer_ids)
