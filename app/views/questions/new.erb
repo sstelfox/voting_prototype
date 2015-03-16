@@ -2,9 +2,12 @@
   <div class='col-md-4'></div>
   <div class='col-md-4'>
     <form action='/questions/new' method='post'>
-      <div class='form-group'>
+      <div class='form-group<% unless question.errors[:text].empty? %> has-feedback has-error<% end %>'>
         <label class='control-label'>Question</label>
-        <input type='text' name='question[text]' class='form-control' value='<%= question.text %>' placeholder='What question would you like to poll?' autofocus />
+        <input type='text' name='question[text]' class='form-control' value='<%= question.text %>' <% unless question.errors[:text].empty? %>aria-describedby='questionTextInvalid' aria-invalid='true'<% end %>placeholder='What question would you like to poll?' autofocus />
+        <% unless question.errors[:text].empty? %>
+          <span id='questionTextInvalid'><%= question.errors[:text].join('; ') %></span>
+        <% end %>
       </div>
 
       <% question.answers.each do |answer| %>
