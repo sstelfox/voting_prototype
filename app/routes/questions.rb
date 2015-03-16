@@ -16,15 +16,7 @@ class Voting::App
   end
 
   post '/questions/new/?', :auth => nil do
-    question = params[:question] || {}
-    answers = extract_attributes(question.delete('answer_attributes'))
-                .map { |a| Voting::Answer.new(a) }
-    voters = extract_attributes(question.delete('voter_attributes'))
-                .map { |a| Voting::Voter.new(a) }
-
-    question = Voting::Question.new(question)
-    question.answers = answers
-    question.voters = voters
+    question = Voting::Question.new(params[:question])
 
     if question.save
       flash[:success] = "You've successfully created a <a href='/questions/#{question.id}'>new question</a>."
