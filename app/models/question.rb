@@ -10,8 +10,8 @@ module Voting
     has n, :answers
     has n, :voters
 
-    validates_with_method :validate_answers
-    validates_with_method :validate_voters
+    #validates_with_method :validate_answers
+    #validates_with_method :validate_voters
 
     def answer_attributes=(attrs)
       self.answers = Array(attrs).map do |a|
