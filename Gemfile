@@ -39,6 +39,11 @@ group :development, :test do
   gem 'rspec'
   gem 'simplecov'
 
+  # Not a big fan of this module, it's a pretty dirty hack and relatively slow
+  # for testing. But it does work and allows me to actually inspect application
+  # state from functional tests.
+  gem 'rack_session_access'
+
   gem 'rdoc'
   gem 'redcarpet'
   gem 'yard'

@@ -1,14 +1,22 @@
+require 'rspec'
+require 'simplecov'
 require 'coveralls'
+
+# Database / Model specific
 require 'database_cleaner'
 require 'dm-rspec'
 require 'dm-transactions'
 require 'fabrication'
 require 'faker'
+
+# Rack::Test specific
 require 'rack/test'
-require 'rspec'
-require 'simplecov'
+require 'rack_session_access'
 require 'support/rack_test_helpers'
+
+# Capybara specific
 require 'capybara/rspec'
+require "rack_session_access/capybara"
 
 ENV['RACK_ENV'] = 'test'
 
@@ -27,6 +35,11 @@ SimpleCov.start
 require_relative '../voting.rb'
 
 Capybara.app = Voting::App
+
+# Setup the fake session access / management
+Voting::App.configure do |app|
+  app.use(RackSessionAccess::Middleware)
+end
 
 # Setup the database in memory
 DataMapper.setup(:default, 'sqlite::memory:')
