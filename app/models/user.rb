@@ -93,7 +93,8 @@ module Voting
     #
     # @return [String]
     def generate_salt
-      self[:salt] = SCrypt::Engine.generate_salt(max_time: 1.25)
+      salt_time = (ENV['RACK_ENV'] == 'test' ? 0.01 : 1.25)
+      self[:salt] = SCrypt::Engine.generate_salt(max_time: salt_time)
     end
   end
 end

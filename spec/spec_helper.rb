@@ -8,6 +8,9 @@ require 'rack/test'
 require 'rspec'
 require 'simplecov'
 require 'support/rack_test_helpers'
+require 'capybara/rspec'
+
+ENV['RACK_ENV'] = 'test'
 
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
   SimpleCov::Formatter::HTMLFormatter,
@@ -22,6 +25,8 @@ end
 SimpleCov.start
 
 require_relative '../voting.rb'
+
+Capybara.app = Voting::App
 
 # Setup the database in memory
 DataMapper.setup(:default, 'sqlite::memory:')
