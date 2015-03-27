@@ -33,7 +33,7 @@ module Voting
     # re-navigate back to the page you were on. Will default to the root home
     # page if there isn't a stored path.
     def redirect_to_stored
-      if new_loc = session[:stored_path]
+      if (new_loc = session[:stored_path])
         session[:stored_path] = nil
         redirect new_loc
       else
@@ -52,7 +52,7 @@ module Voting
         ent = entries.map { |e| e[0] }
         if request.request_method == verb
           ent.map do |e|
-            !!(e =~ path)
+            !(e.match(path)).nil?
           end
         end
       end
