@@ -7,4 +7,10 @@ require 'voting'
 # Ctrl-C
 trap('INT') { exit }
 
+warmup do |app|
+  client = Rack::MockRequest.new(app)
+  client.get('/')
+  puts 'Warmed up!'
+end
+
 run Voting::App
