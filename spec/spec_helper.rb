@@ -35,7 +35,7 @@ DataMapper.auto_upgrade!
 
 RSpec.configure do |config|
   config.include(DataMapper::Matchers)
-  config.include(RackTestHelpers, rack: true)
+  config.include(RackTestHelpers, :type => :rack)
 
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction
