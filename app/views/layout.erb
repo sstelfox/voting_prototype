@@ -20,7 +20,14 @@
     <div class='container'>
       <h1><a href='/'>Voting Application</a></h1>
       <% if logged_in? %>
-        <p><a href='/questions/new'>New Question</a> | <a href='/logout'>Logout</a></p>
+        <p>
+          <form class="form-inline" action="/questions/new" method="get">
+            <input type="number" name="answer_count" class="input-small" placeholder="Answer Count">
+            <input type="number" name="voter_count" class="input-small" placeholder="Voter Count">
+            <button type="submit" class="btn">New Question</button>
+          </form>
+          <form class='form-inline' action='/logout' method='get'><button type='submit' class='btn'>Logout</button></form>
+        </p>
       <% end %>
 
       <% if flash[:alert] %><div class='alert alert-danger' role='alert'><%= flash[:alert] %></div><% end %>

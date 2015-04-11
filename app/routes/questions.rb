@@ -8,8 +8,8 @@ module Voting
 
     get '/questions/new/?', auth: nil do
       question = Question.new(
-        answers: (params[:answer_count] || 3).times.map { Answer.new },
-        voters: (params[:voter_count] || 3).times.map { Voter.new }
+        answers: (params[:answer_count] || 3).to_i.times.map { Answer.new },
+        voters: (params[:voter_count] || 3).to_i.times.map { Voter.new }
       )
       erb :'questions/new', locals: { question: question }
     end

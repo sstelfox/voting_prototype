@@ -17,10 +17,10 @@
         <% end %>
       </div>
 
+      <p><strong>Answers</strong></p>
       <% question.answers.each do |answer| %>
         <input type='hidden' name='question[answer_attributes][]id' value='<%= answer.id %>' />
         <div class='form-group<% unless answer.errors[:text].empty? %> has-feedback has-error<% end %>'>
-          <label class='control-label'>Answer</label>
           <input type='text' name='question[answer_attributes][]text' class='form-control' value='<%= answer.text %>' <% unless answer.errors[:text].empty? %>aria-describedby='answer<%= question.answers.index(answer) %>TextInvalid' aria-invalid='true' <% end %>placeholder='Possible poll answer' />
           <% unless answer.errors[:text].empty? %>
             <span id='answer<%= question.answers.index(answer) %>TextInvalid'><%= answer.errors[:text].join('; ') %></span>
@@ -28,10 +28,10 @@
         </div>
       <% end %>
 
+      <p><strong>Voter Emails</strong></p>
       <% question.voters.each do |voter| %>
         <input type='hidden' name='question[voter_attributes][]id' value='<%= voter.id %>' />
         <div class='form-group<% unless voter.errors[:email].empty? %> has-feedback has-error<% end %>'>
-          <label class='control-label'>Voter Email</label>
           <input type='text' name='question[voter_attributes][]email' class='form-control' value='<%= voter.email %>' <% unless voter.errors[:text].empty? %>aria-describedby='voter<%= question.voters.index(voter) %>TextInvalid' aria-invalid='true' <% end %>placeholder='Email of a voter' />
           <% unless voter.errors[:email].empty? %>
             <span id='voter<%= question.voters.index(voter) %>TextInvalid'><%= voter.errors[:email].join('; ') %></span>
