@@ -4,11 +4,11 @@ module Voting
     include NestedModelHelpers
 
     property :id,     Serial
-    property :text,   String, :length => 256, :required => true
+    property :text,   String, length: 256, required: true
 
     belongs_to :question
 
     has n, :vas
-    has n, :voters, :through => :vas
+    has n, :voters, through: :vas
   end
 end

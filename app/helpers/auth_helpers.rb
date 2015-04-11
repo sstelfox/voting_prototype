@@ -1,4 +1,5 @@
 module Voting
+  # A module containing various authentication related helper methods.
   module AuthHelpers
     # Get a copy of the currently logged in user or nil if the user is
     # invalid/not logged in.
@@ -14,7 +15,7 @@ module Voting
     #
     # @return [Boolean]
     def logged_in?
-      (!!current_user && session[:ip] == request.ip)
+      (!current_user.nil? && session[:ip] == request.ip)
     end
 
     # A helper method that allows sinatra to become aware of when an action
@@ -25,7 +26,8 @@ module Voting
 
       flash[:alert] = 'You need to login before continuing.'
       session[:stored_path] = request.fullpath if routeable_path?(request.fullpath)
-      redirect '/login', 303
+
+      redirect('/login', 303)
     end
 
     # A helper method to redirect to the last page requested that required a
@@ -50,11 +52,7 @@ module Voting
     def routeable_path?(path)
       valid_routes = self.class.routes.map do |verb, entries|
         ent = entries.map { |e| e[0] }
-        if request.request_method == verb
-          ent.map do |e|
-            !(e.match(path)).nil?
-          end
-        end
+        ent.map { |e| !(e.match(path)).nil? } if request.request_method == verb
       end
 
       valid_routes.flatten.include?(true)

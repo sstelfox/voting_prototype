@@ -1,10 +1,11 @@
 module Voting
+  # Root of the prototype voting application.
   class App < Sinatra::Base
     enable :logging, :sessions, :method_override
 
     set :root, File.expand_path(File.join(File.dirname(__FILE__), '..'))
-    set :views, (self.root + '/app/views')
-    set :public_folder, (self.root + '/app/public')
+    set :views, (root + '/app/views')
+    set :public_folder, (root + '/app/public')
 
     configure :development do
       enable :raise_errors

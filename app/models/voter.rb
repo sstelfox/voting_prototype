@@ -7,14 +7,16 @@ module Voting
 
     property :id,     Serial
 
-    property :question_id,  Integer,  :unique_index => :qe_pair
-    property :email,        String,   :length => 256, :required => true, :unique_index => :qe_pair
+    property :question_id,  Integer,  unique_index: :qe_pair
+    property :email,        String,   length: 256,
+                                      required: true,
+                                      unique_index: :qe_pair
     property :token,        String
-    property :vote_cast,    Boolean,  :default => false
+    property :vote_cast,    Boolean,  default: false
 
     belongs_to :question
     has n, :vas
-    has n, :answers, :through => :vas
+    has n, :answers, through: :vas
 
     before :save, :generate_token
 
@@ -27,12 +29,12 @@ module Voting
     end
 
     def answer!(answer_ids)
-      fail(ArgumentError, 'Can\'t vote on a closed question.') if question.closed?
+      fail(ArgumentError, 'Question is closed.') if question.closed?
       update(vote_cast: true, answers: question.answers.all(id: answer_ids))
     end
 
     def vote_cast?
-      self.vote_cast
+      vote_cast
     end
 
     def generate_token

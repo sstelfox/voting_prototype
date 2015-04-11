@@ -1,5 +1,5 @@
 base_directory = File.expand_path(File.dirname(__FILE__))
-$:.unshift(base_directory) unless $:.include?(base_directory)
+$LOAD_PATH.unshift(base_directory) unless $LOAD_PATH.include?(base_directory)
 
 require 'rubygems'
 require 'json'

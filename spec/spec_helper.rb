@@ -16,7 +16,7 @@ require 'support/rack_test_helpers'
 
 # Capybara specific
 require 'capybara/rspec'
-require "rack_session_access/capybara"
+require 'rack_session_access/capybara'
 
 ENV['RACK_ENV'] = 'test'
 
@@ -25,7 +25,7 @@ SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
   Coveralls::SimpleCov::Formatter
 ]
 
-SimpleCov.add_filter "/spec/"
+SimpleCov.add_filter '/spec/'
 SimpleCov.add_filter do |source_file|
   source_file.lines.count < 3
 end
@@ -48,7 +48,7 @@ DataMapper.auto_upgrade!
 
 RSpec.configure do |config|
   config.include(DataMapper::Matchers)
-  config.include(RackTestHelpers, :type => :rack)
+  config.include(RackTestHelpers, type: :rack)
 
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction
@@ -56,9 +56,7 @@ RSpec.configure do |config|
   end
 
   config.around(:each) do |example|
-    DatabaseCleaner.cleaning do
-      example.run
-    end
+    DatabaseCleaner.cleaning { example.run }
   end
 
   config.expect_with :rspec do |expectations|
@@ -78,9 +76,7 @@ RSpec.configure do |config|
   # without intializing them quite a bit.
   config.warnings = false
 
-  if config.files_to_run.one?
-    config.default_formatter = 'doc'
-  end
+  config.default_formatter = 'doc' if config.files_to_run.one?
 
   config.profile_examples = 3
   config.order = :random

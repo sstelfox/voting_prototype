@@ -4,14 +4,15 @@ module Voting
 
     property :id,     Serial
 
-    property :closed, Boolean, :default => false
-    property :text,   String, :length => 256, :required => true
+    property :closed, Boolean,  default: false
+    property :text,   String,   length: 256,
+                                required: true
 
     has n, :answers
     has n, :voters
 
     def answer_attributes=(attrs)
-      self.answers = Array(attrs).map { |a| Voting::Answer.set_or_new(a) }
+      self.answers = Array(attrs).map { |a| Answer.set_or_new(a) }
     end
 
     def cast_voters
@@ -40,7 +41,7 @@ module Voting
     end
 
     def voter_attributes=(attrs)
-      self.voters = Array(attrs).map { |v| Voting::Voter.set_or_new(v) }
+      self.voters = Array(attrs).map { |v| Voter.set_or_new(v) }
     end
   end
 end
