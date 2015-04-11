@@ -6,7 +6,7 @@ module Voting
     #
     # @return [User,Nil]
     def current_user
-      Voting::User.get(session[:user])
+      User.get(session[:user])
     end
 
     # Checks to see whether or not the current user is logged in, also checks
