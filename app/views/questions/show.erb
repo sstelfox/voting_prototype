@@ -1,4 +1,4 @@
-<h3><%= question.text %><% if question.closed? %> <em>(Voting is closed)</em><% end %><% if logged_in? && !question.closed? %> <a href='/questions/<%= question.id %>/close'>[ Close ]</a><% end %></h3>
+<h3><%= question.text %><% unless question.released? %> <em>(Voting isn't open yet)</em><% end %><% if question.closed? %> <em>(Voting is closed)</em><% end %><% if logged_in? %><% if !question.released? %> <a href='/questions/<%= question.id %>/release'>[ Release ]</a><% end %><% if !question.closed? %> <a href='/questions/<%= question.id %>/close'>[ Close ]</a><% end %></h3>
 <h4>Voting Progress: <%= question.cast_voters %> / <%= question.possible_voters %> (<%= '%0.2f' % question.percentage_cast %>%)</h4>
 <hr/>
 
@@ -34,7 +34,6 @@
         <tr>
           <td><%= voter.email %></td>
           <td><%= voter.vote_cast? ? 'Yes' : 'No'  %></td>
-          <td><a href='/questions/<%= question.id %>/vote/<%= voter.token %>'>[Link]</a></td>
         </tr>
       <% end %>
       </tbody>

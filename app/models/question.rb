@@ -13,7 +13,7 @@ module Voting
     has n, :voters
 
     def answer_attributes=(attrs)
-      self.answers = Array(attrs).map { |a| Answer.set_or_new(a) }
+      self.answers = Array(attrs).map { |a| Answer.set_or_new(a) }.reject(&:nil?)
     end
 
     def cast_voters
@@ -21,7 +21,7 @@ module Voting
     end
 
     def close_voting!
-      update(closed: true)
+      update(closed: true, released: true)
     end
 
     def closed?
@@ -50,7 +50,7 @@ module Voting
     end
 
     def voter_attributes=(attrs)
-      self.voters = Array(attrs).map { |v| Voter.set_or_new(v) }
+      self.voters = Array(attrs).map { |v| Voter.set_or_new(v) }.reject(&:nil?)
     end
   end
 end
