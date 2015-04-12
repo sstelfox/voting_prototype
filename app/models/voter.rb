@@ -47,7 +47,9 @@ module Voting
     end
 
     def email_token
-      puts self.inspect
+      if %w(development production).include?(ENV['RACK_ENV'])
+        puts self.inspect
+      end
     end
 
     def generate_token

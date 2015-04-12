@@ -29,6 +29,8 @@ require 'app/routes/default'
 require 'app/routes/auth'
 require 'app/routes/questions'
 
+ENV['RACK_ENV'] ||= 'development'
+
 # Setup the pony gem
 Pony.options = {
   address: 'smtp.gmail.com',

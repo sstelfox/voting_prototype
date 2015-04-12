@@ -13,4 +13,6 @@ warmup do |app|
   puts 'Warmed up!'
 end
 
+puts DataMapper::Repository.adapters[:default].instance_variable_get(:'@normalized_uri').path
+
 run Voting::App

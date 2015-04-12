@@ -9,16 +9,6 @@ RSpec.describe(Voting::App) do
       expect(last_response).to be_ok
     end
 
-    it 'redirects when the user is already logged in' do
-      get('/login', {}, {'rack.session' => {user: user.id, ip: '127.0.0.1'}})
-      follow_redirect!
-
-      expect(last_response).to be_ok
-      expect(last_request.path).to eq('/')
-
-      expect(last_response.body).to match(/You're already logged in/)
-    end
-
     it 'accepts a valid login' do
       post('/login', username: user.username, password: user.password)
       follow_redirect!
