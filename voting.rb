@@ -13,9 +13,10 @@ require 'dm-timestamps'
 require 'dm-transactions'
 require 'dm-validations'
 
+require 'pony'
+require 'rack-flash'
 require 'sinatra/base'
 require 'sinatra/namespace'
-require 'rack-flash'
 
 require 'app/helpers/auth_helpers'
 require 'app/helpers/nested_model_helpers'
@@ -27,3 +28,14 @@ require 'lib/voting_app'
 require 'app/routes/default'
 require 'app/routes/auth'
 require 'app/routes/questions'
+
+# Setup the pony gem
+Pony.options = {
+  address: 'smtp.gmail.com',
+  port: '587',
+  enable_startttls_auto: true,
+  user_name: ENV['GMAIL_EMAIL'],
+  password: ENV['GMAIL_PASS'],
+  authentication: :plain,
+  domain: 'voting.stelfox.net'
+}

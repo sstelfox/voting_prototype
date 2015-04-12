@@ -20,6 +20,8 @@ module Voting
 
     before :save, :generate_token
 
+    after :create, :email_token
+
     def self.cast
       all(vote_cast: true)
     end
@@ -33,12 +35,16 @@ module Voting
       update(vote_cast: true, answers: question.answers.all(id: answer_ids))
     end
 
-    def vote_cast?
-      vote_cast
+    def email_token
+      puts 'Token got emailed!'
     end
 
     def generate_token
       self.token ||= SecureRandom.hex(24)
+    end
+
+    def vote_cast?
+      vote_cast
     end
   end
 end

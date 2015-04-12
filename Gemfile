@@ -18,6 +18,7 @@ gem 'dm-validations'
 
 gem 'rake'
 gem 'pry'
+gem 'pony'
 
 gem 'scrypt'
 
