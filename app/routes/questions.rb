@@ -40,7 +40,7 @@ module Voting
       redirect "/questions/#{question.id}/"
     end
 
-    get '/questions/:id/release/?, auth: nil do
+    get '/questions/:id/release/?', auth: nil do
       halt(404) unless (question = Question.get(params[:id]))
 
       question.release_for_voting!
