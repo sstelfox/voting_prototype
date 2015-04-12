@@ -1,8 +1,9 @@
-<h3><%= question.text %><% unless question.released? %> <em>(Voting isn't open yet)</em><% end %><% if question.closed? %> <em>(Voting is closed)</em><% end %><% if logged_in? %><% if !question.released? %> <a href='/questions/<%= question.id %>/release'>[ Release ]</a><% end %><% if !question.closed? %> <a href='/questions/<%= question.id %>/close'>[ Close ]</a><% end %></h3>
+<h3><%= question.text %><% unless question.released? %> <em>(Voting isn't open yet)</em><% end %><% if question.closed? %> <em>(Voting is closed)</em><% end %><% if logged_in? %><% if !question.released? %> <a href='/questions/<%= question.id %>/release'>[ Release ]</a><% end %><% if !question.closed? %> <a href='/questions/<%= question.id %>/close'>[ Close ]</a><% end %><% end %></h3>
 <h4>Voting Progress: <%= question.cast_voters %> / <%= question.possible_voters %> (<%= '%0.2f' % question.percentage_cast %>%)</h4>
 <hr/>
 
 <div class="row">
+  <% if question.closed? %>
   <div class="col-md-6">
     <h3>Current Results:</h3>
     <table class='table'>
@@ -20,6 +21,7 @@
       </tbody>
     </table>
   </div>
+  <% end %>
   <% if logged_in? || question.closed? %>
   <div class="col-md-6">
     <h3>Voter Breakdown</h3>
@@ -27,7 +29,6 @@
       <thead>
         <th>Email</th>
         <th>Voted?</th>
-        <th>Vote Page</th>
       </thead>
       <tbody>
       <% question.voters.each do |voter| %>

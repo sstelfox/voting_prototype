@@ -6,7 +6,7 @@
       <th>Question</th>
       <th>Voter Progress</th>
       <th>Answer Count</th>
-      <th>Voting Closed?</th>
+      <th>Voting Status</th>
     </tr></thead>
     <tbody>
       <% questions.each do |q| %>
@@ -14,7 +14,7 @@
           <td><a href='/questions/<%= q.id %>'><%= q.text %></a></td>
           <td><%= q.cast_voters %> / <%= q.possible_voters %> (<%= '%0.2f' % q.percentage_cast %>%)</td>
           <td><%= q.answers.count %></td>
-          <td><%= q.closed? ? 'Yes' : 'No' %></td>
+          <td><%= q.released? ? (q.closed? ? 'Closed' : 'Open') : 'Not Released' %></td>
         </tr>
       <% end %>
     </tbody>

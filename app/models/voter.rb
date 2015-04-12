@@ -38,7 +38,7 @@ module Voting
     end
 
     def email_token
-      puts 'Token got emailed!'
+      puts self.inspect
     end
 
     def generate_token
