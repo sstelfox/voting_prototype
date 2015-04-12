@@ -32,6 +32,8 @@ module Voting
 
     def answer!(answer_ids)
       fail(ArgumentError, 'Question is closed.') if question.closed?
+      fail(ArgumentError, 'Question isn\'t released.') unless question.released?
+
       update(vote_cast: true, answers: question.answers.all(id: answer_ids))
     end
 

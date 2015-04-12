@@ -2,11 +2,12 @@ module Voting
   class Question
     include DataMapper::Resource
 
-    property :id,     Serial
+    property :id,       Serial
 
-    property :closed, Boolean,  default: false
-    property :text,   String,   length: 256,
-                                required: true
+    property :closed,   Boolean,  default: false
+    property :released, Boolean,  default: false
+    property :text,     String,   length: 256,
+                                  required: true
 
     has n, :answers
     has n, :voters
@@ -34,6 +35,14 @@ module Voting
 
     def possible_voters
       voters.count
+    end
+
+    def released?
+      released
+    end
+
+    def release_for_voting!
+      update(released: true)
     end
 
     def vote_breakdown

@@ -28,13 +28,22 @@ module Voting
     end
 
     get '/questions/:id/?' do
-      erb :'questions/show', locals: { question: Question.get(params[:id]) }
+      halt(404) unless (question = Question.get(params[:id]))
+
+      erb :'questions/show', locals: { question: question }
     end
 
     get '/questions/:id/close/?', auth: nil do
       halt(404) unless (question = Question.get(params[:id]))
 
       question.close_voting!
+      redirect "/questions/#{question.id}/"
+    end
+
+    get '/questions/:id/release/?, auth: nil do
+      halt(404) unless (question = Question.get(params[:id]))
+
+      question.release_for_voting!
       redirect "/questions/#{question.id}/"
     end
 

@@ -4,6 +4,8 @@
   <ul>
     <% voter.answers.each do |a| %><li><%= a.text %></li><% end %>
   </ul>
+<% elsif !voter.question.released? %>
+  <p>Your vote is still unused, but this question hasn't been released for voting on yet. Until that time answers and voters may change on the question. Please check back later to use your vote!</p>
 <% else %>
   <div class='row'>
     <div class='offset-md-4 col-md-4'>
