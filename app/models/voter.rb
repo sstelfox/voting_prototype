@@ -37,6 +37,15 @@ module Voting
       update(vote_cast: true, answers: question.answers.all(id: answer_ids))
     end
 
+    def censored_email
+      parts = email.split('@')
+
+      domain = parts.pop
+      user = parts.join('@')
+
+      user[0..1] + ('*' * 12) + user[-2..-1] + '@' + domain
+    end
+
     def email_token
       puts self.inspect
     end
