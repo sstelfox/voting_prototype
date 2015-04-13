@@ -12,7 +12,7 @@ RSpec.describe Voting::Question do
 
   context '#close_voting!' do
     it 'marks the voting as closed' do
-      inst.closed = false
+      inst.update(closed: false)
 
       expect { inst.close_voting! }
         .to change { inst.closed? }.from(false).to(true)
