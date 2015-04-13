@@ -23,6 +23,10 @@ module Voting
         redirect '/questions'
       else
         flash.now[:alert] = 'There was an error in your submission.'
+
+        require 'pry'
+        binding.pry
+
         erb :'questions/new', locals: { question: question }
       end
     end
@@ -33,7 +37,7 @@ module Voting
       erb :'questions/show', locals: { question: question }
     end
 
-    post '/questions/:id/new_answer/?' do
+    post '/questions/:id/new_answer/?', auth: nil do
       halt(404) unless (question = Question.get(params[:id]))
 
       text = params[:answer][:text]
@@ -57,7 +61,7 @@ module Voting
       redirect "/questions/#{question.id}/"
     end
 
-    post '/questions/:id/new_voter/?' do
+    post '/questions/:id/new_voter/?', auth: nil do
       halt(404) unless (question = Question.get(params[:id]))
 
       email = params[:voter][:email]

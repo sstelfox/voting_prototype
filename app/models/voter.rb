@@ -21,8 +21,7 @@ module Voting
     has n, :vas
     has n, :answers, through: :vas
 
-    before :save, :generate_token
-    after :save, :email_token
+    before :save, :generate_and_email_token
 
     def self.cast
       all(vote_cast: true)
@@ -49,9 +48,14 @@ module Voting
       user[0..1] + ('*' * 12) + user[-2..-1] + '@' + domain
     end
 
+    def generate_and_email_token
+      generate_token
+      email_token
+    end
+
     def email_token
       return if email_sent? || !approved?
-      update(email_sent: true)
+      self.email_sent = true
 
       if ENV['RACK_ENV'] == 'production'
         Pony.mail(
