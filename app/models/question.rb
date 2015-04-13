@@ -24,10 +24,6 @@ module Voting
       update(closed: true, released: true)
     end
 
-    def closed?
-      closed
-    end
-
     def percentage_cast
       return 0.0 if possible_voters == 0
       (cast_voters.to_f / possible_voters.to_f) * 100
@@ -35,10 +31,6 @@ module Voting
 
     def possible_voters
       voters.count
-    end
-
-    def released?
-      released
     end
 
     def release_for_voting!

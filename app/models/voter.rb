@@ -12,6 +12,9 @@ module Voting
                                       required: true,
                                       unique_index: :qe_pair
     property :token,        String
+
+    property :approved,     Boolean,  default: true
+    property :email_sent,   Boolean,  default: false
     property :vote_cast,    Boolean,  default: false
 
     belongs_to :question
@@ -19,8 +22,7 @@ module Voting
     has n, :answers, through: :vas
 
     before :save, :generate_token
-
-    after :create, :email_token
+    after :save, :email_token
 
     def self.cast
       all(vote_cast: true)
@@ -31,6 +33,7 @@ module Voting
     end
 
     def answer!(answer_ids)
+      fail(ArgumentError, 'Must be approved to vote.') unless approved?
       fail(ArgumentError, 'Question is closed.') if question.closed?
       fail(ArgumentError, 'Question isn\'t released.') unless question.released?
 
@@ -47,17 +50,22 @@ module Voting
     end
 
     def email_token
-      if %w(development production).include?(ENV['RACK_ENV'])
-        puts self.inspect
+      return if email_sent? || !approved?
+      update(email_sent: true)
+
+      if ENV['RACK_ENV'] == 'production'
+        Pony.mail(
+          to: email,
+          subject: 'Your Voting Token',
+          html_body: "<html><body><p>The following link allows you to vote on the question '#{question.text}'. Once the question has been has been opened click on the following link and choose your answers. After voting you can use the link to validate your votes were recorded correctly.</p><p><a href='http://voting.stelfox.net/questions/#{question_id}/vote/#{token}/'>http://voting.stelfox.net/questions/#{question_id}/vote/#{token}/</a></body></html>"
+        )
+      elsif ENV['RACK_ENV'] == 'development'
+        puts inspect
       end
     end
 
     def generate_token
       self.token ||= SecureRandom.hex(24)
-    end
-
-    def vote_cast?
-      vote_cast
     end
   end
 end

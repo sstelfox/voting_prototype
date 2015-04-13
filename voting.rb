@@ -41,3 +41,5 @@ Pony.options = {
   authentication: :plain,
   domain: 'voting.stelfox.net'
 }
+
+Pony.override_options = { from: ENV['GMAIL_EMAIL'] }
