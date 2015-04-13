@@ -1,5 +1,8 @@
 Fabricator(:voter, class_name: 'Voting::Voter') do
   email { Faker::Internet.email }
+  approved true
+  email_sent false
+  vote_cast false
 end
 
 Fabricator(:cast_voter, from: :voter) do
